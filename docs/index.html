@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homepage | JINT Examples</title>
+    <meta name="description" content="Examples and source code referenced in the JINT Methodology document">
+
+    <style>
+        body
+        {
+            margin: 0;
+            padding: 0;
+            display: block;
+            width: 100vw;
+            min-height: 100vh;
+            position: relative;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8fafc;
+        }
+
+        a
+        {
+            height: 36px;
+            line-height: 36px;
+            padding: 0 1rem;
+            border-radius: 0.125rem;
+            background-color: rgb(220, 20, 60);
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            cursor: pointer;
+            user-select: none;
+            margin: 0.5rem;
+            transition: all 75ms ease-in-out;
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+            outline: none;
+        }
+
+        a:hover
+        {
+            transform: translateY(-3px);
+            background-color: hsl(348, 83%, 50%);
+            box-shadow: 0 2px 8px rgba(220, 20, 60,0.3), 0 1px 3px rgba(220, 20, 60,0.3);
+        }
+
+        a:active
+        {
+            transform: translateY(0px);
+            background-color: hsl(348, 83%, 45%);
+            box-shadow: 0 1px 3px rgba(220, 20, 60,0.3);
+        }
+
+        :root
+        {
+            font-size: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div style="width:100vw;height: 100vh;position: relative;display: flex;justify-content: center;align-items: center;flex-flow: column wrap;">
+        <div style="display: inline-block;position: relative;width:640px;max-width: 100%;padding: 2rem;text-align: center;">
+            <a href="background-changer/index.html">Background Changer Web Module</a>
+        </div>
+    </div>
+</body>
+</html>

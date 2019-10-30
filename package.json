@@ -1,0 +1,16 @@
+{
+  "name": "jint-examples",
+  "version": "1.0.0",
+  "description": "Examples and source code referenced in the JINT Methodology document",
+  "scripts": {
+    "preview": "serve -d ./docs",
+    "compile": "tsc",
+    "build": "npm run compile && npm run preview"
+  },
+  "author": "Kyle Andrews",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^11.2.0",
+    "typescript": "^3.6.4"
+  }
+}
