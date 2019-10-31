@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>State Manager Web Module | JINT Examples</title>
+    <meta name="description" content="This example showcases how web modules can be used to an the applications state, communication between web components, and how to keep several web component in sync.">
+
+    <style>
+        :root
+        {
+            font-size: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body
+        {
+            margin: 0;
+            padding: 0;
+            display: block;
+            width: 100vw;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #back
+        {
+            position:fixed;
+            top:1rem;
+            left:1.5rem;
+            width:48px;
+            height:48px;
+            border-radius:50%;
+            background-color:#fff;
+            box-shadow: 0 2px 4px rgba(51,51,51,0.2);
+            color:rgba(51, 51, 51, 0.6);
+            display:inline-flex;
+            justify-content:center;
+            align-items:center;
+            flex-flow: column wrap;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 75ms ease-in-out;
+        }
+
+        #back:hover
+        {
+            color: rgba(51,51,51,1);
+        }
+
+        user-account button
+        {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column wrap;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            color: hsl(9, 100%, 64%);
+            background: transparent;
+            cursor: pointer;
+            transition: all 75ms ease-in-out;
+            margin-left: 1rem;
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        user-account button:hover
+        {
+            color: hsl(9, 100%, 68%);
+        }
+
+        user-account button:active
+        {
+            color: hsl(9, 100%, 60%);
+        }
+
+        user-account
+        {
+            display: inline-flex;
+            align-items: center;
+            font-size: 1.25rem;
+            color: #333;
+            padding: 0.5rem 0.75rem 0.5rem 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid rgba(51,51,51,0.3);
+        }
+
+        dialog-modal-container
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column wrap;
+            overscroll-behavior-y: contain;
+        }
+
+        dialog-modal-backdrop
+        {
+            background-color: rgba(51,51,51,0.3);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        dialog-modal
+        {
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(51,51,51,0.6);
+            width: 350px;
+            max-width: 100%;
+            z-index: 2;
+        }
+
+        h3
+        {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            width: 100%;
+        }
+
+        p
+        {
+            margin-bottom: 1rem;
+            display: block;
+            width: 100%;
+            opacity: 0.6;
+            line-height: 1.618;
+        }
+
+        dialog-actions-wrapper
+        {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            align-items: center;
+        }
+        
+        dialog-actions-wrapper button
+        {
+            height: 36px;
+            line-height: 36px;
+            cursor: pointer;
+            margin-left: 1rem;
+            border-radius: 0.125rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            border: none;
+            outline: none;
+            box-shadow: none;
+            background: transparent;
+            transition: all 75ms ease-in-out;
+        }
+
+        .-text
+        {
+            padding: 0 0.5rem;
+        }
+
+        .-grey
+        {
+            color: #7e7e7e;
+        }
+
+        .-grey:hover
+        {
+            background-color: rgba(65, 105, 225, 0.07);
+        }
+
+        .-solid
+        {
+            padding: 0 1rem;
+        }
+
+        .-red
+        {
+            color: #fff;
+            background-color: hsl(9, 100%, 64%);
+        }
+
+        .-red:hover
+        {
+            background-color: hsl(9, 100%, 68%);
+        }
+
+        .-red:active
+        {
+            background-color: hsl(9, 100%, 60%);
+        }
+    </style>
+
+    <script type="module" src="/assets/user-account-component.js"></script>
+</head>
+<body>
+    <a id="back" href="/">
+        <svg style="width:24px;height:24px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-alt-left" class="svg-inline--fa fa-arrow-alt-left fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M448 208v96c0 13.3-10.7 24-24 24H224v103.8c0 21.4-25.8 32.1-41 17L7 273c-9.4-9.4-9.4-24.6 0-34L183 63.3c15.1-15.1 41-4.4 41 17V184h200c13.3 0 24 10.7 24 24z"></path></svg>
+    </a>
+    <div style="width: 100vw;height: 100vh;position: absolute;top: 0;left: 0;display: flex;justify-content: center;align-items: center;flex-flow: column wrap;">
+        <user-account>
+            <span>Jon Snow</span>
+            <button>
+                <svg style="width:24px;height:24px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash-alt" class="svg-inline--fa fa-trash-alt fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path></svg>
+            </button>
+        </user-account>
+    </div>
+</body>
+</html>
