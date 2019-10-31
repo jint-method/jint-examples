@@ -24,7 +24,7 @@ class UserAccountComponent extends HTMLElement {
     }
     deleteAccount() {
         /** Do account deletion logic */
-        window.alert('User account deleted');
+        this.remove();
     }
     connectedCallback() {
         const deleteButton = this.querySelector('button');

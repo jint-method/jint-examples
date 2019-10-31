@@ -27,7 +27,7 @@ class UserAccountComponent extends HTMLElement
     private deleteAccount() : void
     {
         /** Do account deletion logic */
-        window.alert('User account deleted');
+        this.remove();
     }
 
     connectedCallback()
